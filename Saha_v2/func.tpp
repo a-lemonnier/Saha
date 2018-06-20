@@ -25,7 +25,7 @@ std::vector<_T> func<_T,_T1,_T2>::e_pressure(std::vector<_T> &N_e,std::vector<_T
 }
 
 
-/******* Saha-Boltzmann Equation *******/
+/******* Saha Equation *******/
 
 template<class _T, class _T1, class _T2>
 std::vector<_T2> func<_T,_T1,_T2>::saha_Ne(
@@ -33,33 +33,32 @@ std::vector<_T2> func<_T,_T1,_T2>::saha_Ne(
 			std::vector<_T1> &Z0,
 			std::vector<_T2> &Ne,
 			std::vector<_T2> &T,
-			int nb_e) {
+			_T Z_nb_e) {
 
 	std::vector<_T2> pop_ratio;
 
 	unsigned int dim=Ne.size();
 
-	if (nb_e<1) {
+	if (Z_nb_e<1) {
 		std::cerr << "saha(): invalid number of electron  !\n";
-		nb_e=1;
+		Z_nb_e=1;
 	}
 	if (dim!=Z0.size() || dim!=Z1.size() || dim!=T.size()) {
 		std::cerr << "saha(): vector sizes do not match !\n";
 	}
 	else {
-		//_T2 C1=pow(2.0*PI*pow(hbar,2.0)*pow(v_light,2.0)/(m_e*k_B),-1.5);  // raw formula
         _T2 C2= -1.5 * ( log10(2.0*PI) + 2.0*log10(hbar) + 2.0*log10(v_light) - log10(m_e)) ;
 
 		for(unsigned int i=0;i<dim;i++) {
-			_T2 z=-1.0; // to detect an error
-
-			/* raw
-            if (nb_e==24 && Ne[i]!=0) z = 2.0 * C1 * (Z1[i]/Z0[i]) * pow( T[i], 1.5)  * exp(-E_FeII_FeIII/(k_B * T[i])) / Ne[i];
-            if (nb_e==25 && Ne[i]!=0) z = 2.0 * C1 * (Z1[i]/Z0[i]) * pow( T[i], 1.5)  * exp(-E_FeI_FeII/(k_B * T[i])) / Ne[i];
-            */
-
-            if (nb_e==25 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII)/(log(10.0) * k_B * T[i]);
-            if (nb_e==24 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII+E_FeII_FeIII)/(log(10.0) * k_B * T[i]);
+			_T2 z=-1.0; 
+			if (((int)  Z_nb_e)==26 ) {
+                if (Z_nb_e==26.01 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII)/(log(10.0) * k_B * T[i]);
+                if (Z_nb_e==26.02 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII+E_FeII_FeIII)/(log(10.0) * k_B * T[i]);
+            }
+            if (((int)  Z_nb_e)==83 ) {
+                if (Z_nb_e==83.01 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII)/(log(10.0) * k_B * T[i]);
+                if (Z_nb_e==83.02 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII+E_BiII_BiIII)/(log(10.0) * k_B * T[i]);
+            }
 
          pop_ratio.push_back(z);
 		}
@@ -73,15 +72,15 @@ std::vector<_T2> func<_T,_T1,_T2>::saha_Pe(
 			std::vector<_T1> &Z0,
 			std::vector<_T2> &Pe,
 			std::vector<_T2> &T,
-			int nb_e) {
+			_T Z_nb_e) {
 
 	std::vector<_T2> pop_ratio;
 
 	unsigned int dim=Pe.size();
 
-	if (nb_e<1) {
+	if (Z_nb_e<1) {
 		std::cerr << "saha(): invalid number of electron  !\n";
-		nb_e=1;
+		Z_nb_e=1;
 	}
 	if (dim!=Z0.size() || dim!=Z1.size() || dim!=T.size()) {
 		std::cerr << "saha(): vector sizes do not match !\n";
@@ -91,12 +90,14 @@ std::vector<_T2> func<_T,_T1,_T2>::saha_Pe(
 
 		for(unsigned int i=0;i<dim;i++) {
 			_T2 z=-1.0; // to detect an error
-
-            if (nb_e==25 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10( k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII)/(log(10.0) * k_B * T[i]);
-            if (nb_e==24 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10( k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII+E_FeII_FeIII)/(log(10.0) * k_B * T[i]);
-
-//             if (nb_e==25 && Pe[i]!=0) z = log10 (0.665) + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(  T[i]) - E_FeI_FeII/(log(10.0) * k_B * T[i]);
-//             if (nb_e==24 && Pe[i]!=0) z = log10 (0.665) + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(  T[i]) - E_FeII_FeIII/(log(10.0) * k_B * T[i]);
+            if (((int)  Z_nb_e)==26 ) {
+                if (Z_nb_e==26.01 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10( k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII)/(log(10.0) * k_B * T[i]);
+                if (Z_nb_e==26.02 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10( k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII+E_FeII_FeIII)/(log(10.0) * k_B * T[i]);
+            }
+             if (((int)  Z_nb_e)==83 ) {
+                if (Z_nb_e==83.01 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII)/(log(10.0) * k_B * T[i]);
+                if (Z_nb_e==83.02 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII+E_BiII_BiIII)/(log(10.0) * k_B * T[i]);
+            }
 
          pop_ratio.push_back(z);
 		}
@@ -106,20 +107,34 @@ std::vector<_T2> func<_T,_T1,_T2>::saha_Pe(
 
 
 template<class _T, class _T1, class _T2>
-std::vector<_T> func<_T,_T1,_T2>::Z_func(std::vector<_T> &T, int nb_e) {
+std::vector<_T> func<_T,_T1,_T2>::Z_func(std::vector<_T> &T, _T1 Z_nb_e) {
 
     bool status=true;
     std::vector<_T1> Z;
 
    if (fit_order==8) {
-        if (nb_e==26 && Z_o8_FeI[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feI !\n"; status=false;}
-        if (nb_e==25 && Z_o8_FeII[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feII !\n"; status=false;}
-        if (nb_e==24 && Z_o8_FeIII[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feIII !\n"; status=false;}
+        if (((int)  Z_nb_e)==26 ) {
+            if (Z_nb_e==26.00 && Z_o8_FeI[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feI !\n"; status=false;}
+            if (Z_nb_e==26.01 && Z_o8_FeII[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feII !\n"; status=false;}
+            if (Z_nb_e==26.02 && Z_o8_FeIII[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feIII !\n"; status=false;}
+        }
+        if (((int)  Z_nb_e)==83 ) {
+            if (Z_nb_e==83.00 && Z_o8_BiI[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiI !\n"; status=false;}
+            if (Z_nb_e==83.01 && Z_o8_BiII[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiII !\n"; status=false;}
+            if (Z_nb_e==83.02 && Z_o8_BiIII[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiIII !\n"; status=false;}
+        }
     }
-    if (fit_order==5) {
-        if (nb_e==26 && Z_o5_FeI[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feI !\n"; status=false;}
-        if (nb_e==25 && Z_o5_FeII[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feII !\n"; status=false;}
-        if (nb_e==24 && Z_o5_FeIII[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feIII !\n"; status=false;}
+       if (fit_order==5) {
+        if (((int)  Z_nb_e)==26 ) {
+            if (Z_nb_e==26.00 && Z_o5_FeI[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feI !\n"; status=false;}
+            if (Z_nb_e==26.01 && Z_o5_FeII[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feII !\n"; status=false;}
+            if (Z_nb_e==26.02 && Z_o5_FeIII[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feIII !\n"; status=false;}
+        }
+        if (((int)  Z_nb_e)==83 ) {
+            if (Z_nb_e==83.00 && Z_o5_BiI[0]!=5) {std::cerr << "Z_Bi_5(): bad partition function for BiI !\n"; status=false;}
+            if (Z_nb_e==83.01 && Z_o5_BiII[0]!=5) {std::cerr << "Z_Bi_5(): bad partition function for BiII !\n"; status=false;}
+            if (Z_nb_e==83.02 && Z_o5_BiIII[0]!=5) {std::cerr << "Z_Bi_5(): bad partition function for BiIII !\n"; status=false;}
+        }
     }
 
     if (status) {
@@ -131,15 +146,29 @@ std::vector<_T> func<_T,_T1,_T2>::Z_func(std::vector<_T> &T, int nb_e) {
         for(unsigned int i=0;i<T.size();i++) {
             _T1 zi=0.0;
             for(int p=fit_order;p!=-1;p--) { // higher powers come first
-                if (fit_order==8) {
-                    if (nb_e==26) zi+=Z_o8_FeI[fit_order+1-p]*pow(C/T[i],p);
-                    if (nb_e==25) zi+=Z_o8_FeII[fit_order+1-p]*pow(C/T[i],p);
-                    if (nb_e==24) zi+=Z_o8_FeIII[fit_order+1-p]*pow(C/T[i],p);
+                if (((int)  Z_nb_e)==26 ) {
+                    if (fit_order==8) {
+                        if (Z_nb_e==26.00) zi+=Z_o8_FeI[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==26.01) zi+=Z_o8_FeII[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==26.02) zi+=Z_o8_FeIII[fit_order+1-p]*pow(C/T[i],p);
+                    }
+                    if (fit_order==5) {
+                        if (Z_nb_e==26.00) zi+=Z_o5_FeI[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==26.01) zi+=Z_o5_FeII[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==26.02) zi+=Z_o5_FeIII[fit_order+1-p]*pow(C/T[i],p);
+                    }
                 }
-                if (fit_order==5) {
-                    if (nb_e==26) zi+=Z_o5_FeI[fit_order+1-p]*pow(C/T[i],p);
-                    if (nb_e==25) zi+=Z_o5_FeII[fit_order+1-p]*pow(C/T[i],p);
-                    if (nb_e==24) zi+=Z_o5_FeIII[fit_order+1-p]*pow(C/T[i],p);
+                 if (((int)  Z_nb_e)==83 ) {
+                    if (fit_order==8) {
+                        if (Z_nb_e==83.00) zi+=Z_o8_BiI[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==83.01) zi+=Z_o8_BiII[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==83.02) zi+=Z_o8_BiIII[fit_order+1-p]*pow(C/T[i],p);
+                    }
+                    if (fit_order==5) {
+                        if (Z_nb_e==83.00) zi+=Z_o5_BiI[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==83.01) zi+=Z_o5_BiII[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==83.02) zi+=Z_o5_BiIII[fit_order+1-p]*pow(C/T[i],p);
+                    }
                 }
             }
             Z.push_back(zi);
