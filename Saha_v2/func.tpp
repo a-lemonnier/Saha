@@ -55,6 +55,10 @@ std::vector<_T2> func<_T,_T1,_T2>::saha_Ne(
                 if (Z_nb_e==26.01 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII)/(log(10.0) * k_B * T[i]);
                 if (Z_nb_e==26.02 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII+E_FeII_FeIII)/(log(10.0) * k_B * T[i]);
             }
+            if (((int)  Z_nb_e)==82 ) {
+                if (Z_nb_e==82.01 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Pb_PbI+E_PbI_PbII)/(log(10.0) * k_B * T[i]);
+                if (Z_nb_e==82.02 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Pb_PbI+E_PbI_PbII+E_PbII_PbIII)/(log(10.0) * k_B * T[i]);
+            }
             if (((int)  Z_nb_e)==83 ) {
                 if (Z_nb_e==83.01 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII)/(log(10.0) * k_B * T[i]);
                 if (Z_nb_e==83.02 && Ne[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Ne[i]) + 1.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII+E_BiII_BiIII)/(log(10.0) * k_B * T[i]);
@@ -94,7 +98,11 @@ std::vector<_T2> func<_T,_T1,_T2>::saha_Pe(
                 if (Z_nb_e==26.01 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10( k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII)/(log(10.0) * k_B * T[i]);
                 if (Z_nb_e==26.02 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10( k_B * T[i]) - (E_Fe_FeI+E_FeI_FeII+E_FeII_FeIII)/(log(10.0) * k_B * T[i]);
             }
-             if (((int)  Z_nb_e)==83 ) {
+            if (((int)  Z_nb_e)==82 ) {
+                if (Z_nb_e==82.01 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(k_B * T[i]) - (E_Pb_PbI+E_PbI_PbII)/(log(10.0) * k_B * T[i]);
+                if (Z_nb_e==82.02 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(k_B * T[i]) - (E_Pb_PbI+E_PbI_PbII+E_PbII_PbIII)/(log(10.0) * k_B * T[i]);
+            }
+            if (((int)  Z_nb_e)==83 ) {
                 if (Z_nb_e==83.01 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII)/(log(10.0) * k_B * T[i]);
                 if (Z_nb_e==83.02 && Pe[i]!=0) z = log10 (2.0) + C2 + Z1[i] - Z0[i] - log10(Pe[i]) + 2.5 * log10(k_B * T[i]) - (E_Bi_BiI+E_BiI_BiII+E_BiII_BiIII)/(log(10.0) * k_B * T[i]);
             }
@@ -118,6 +126,11 @@ std::vector<_T> func<_T,_T1,_T2>::Z_func(std::vector<_T> &T, _T1 Z_nb_e) {
             if (Z_nb_e==26.01 && Z_o8_FeII[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feII !\n"; status=false;}
             if (Z_nb_e==26.02 && Z_o8_FeIII[0]!=8) {std::cerr << "Z_Fe_8(): bad partition function for feIII !\n"; status=false;}
         }
+        if (((int)  Z_nb_e)==82 ) {
+            if (Z_nb_e==82.00 && Z_o8_PbI[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiI !\n"; status=false;}
+            if (Z_nb_e==82.01 && Z_o8_PbII[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiII !\n"; status=false;}
+            if (Z_nb_e==82.02 && Z_o8_PbIII[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiIII !\n"; status=false;}
+        }
         if (((int)  Z_nb_e)==83 ) {
             if (Z_nb_e==83.00 && Z_o8_BiI[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiI !\n"; status=false;}
             if (Z_nb_e==83.01 && Z_o8_BiII[0]!=8) {std::cerr << "Z_Bi_8(): bad partition function for BiII !\n"; status=false;}
@@ -129,6 +142,11 @@ std::vector<_T> func<_T,_T1,_T2>::Z_func(std::vector<_T> &T, _T1 Z_nb_e) {
             if (Z_nb_e==26.00 && Z_o5_FeI[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feI !\n"; status=false;}
             if (Z_nb_e==26.01 && Z_o5_FeII[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feII !\n"; status=false;}
             if (Z_nb_e==26.02 && Z_o5_FeIII[0]!=5) {std::cerr << "Z_Fe_5(): bad partition function for feIII !\n"; status=false;}
+        }
+        if (((int)  Z_nb_e)==83 ) {
+            if (Z_nb_e==82.00 && Z_o5_PbI[0]!=5) {std::cerr << "Z_Pb_5(): bad partition function for PbI !\n"; status=false;}
+            if (Z_nb_e==82.01 && Z_o5_PbII[0]!=5) {std::cerr << "Z_Pb_5(): bad partition function for PbII !\n"; status=false;}
+            if (Z_nb_e==82.02 && Z_o5_PbIII[0]!=5) {std::cerr << "Z_Pb_5(): bad partition function for PbIII !\n"; status=false;}
         }
         if (((int)  Z_nb_e)==83 ) {
             if (Z_nb_e==83.00 && Z_o5_BiI[0]!=5) {std::cerr << "Z_Bi_5(): bad partition function for BiI !\n"; status=false;}
@@ -158,6 +176,18 @@ std::vector<_T> func<_T,_T1,_T2>::Z_func(std::vector<_T> &T, _T1 Z_nb_e) {
                         if (Z_nb_e==26.02) zi+=Z_o5_FeIII[fit_order+1-p]*pow(C/T[i],p);
                     }
                 }
+                if (((int)  Z_nb_e)==82 ) {
+                    if (fit_order==8) {
+                        if (Z_nb_e==82.00) zi+=Z_o8_PbI[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==82.01) zi+=Z_o8_PbII[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==82.02) zi+=Z_o8_PbIII[fit_order+1-p]*pow(C/T[i],p);
+                    }
+                    if (fit_order==5) {
+                        if (Z_nb_e==82.00) zi+=Z_o5_PbI[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==82.01) zi+=Z_o5_PbII[fit_order+1-p]*pow(C/T[i],p);
+                        if (Z_nb_e==82.02) zi+=Z_o5_PbIII[fit_order+1-p]*pow(C/T[i],p);
+                    }
+                }
                  if (((int)  Z_nb_e)==83 ) {
                     if (fit_order==8) {
                         if (Z_nb_e==83.00) zi+=Z_o8_BiI[fit_order+1-p]*pow(C/T[i],p);
@@ -169,6 +199,7 @@ std::vector<_T> func<_T,_T1,_T2>::Z_func(std::vector<_T> &T, _T1 Z_nb_e) {
                         if (Z_nb_e==83.01) zi+=Z_o5_BiII[fit_order+1-p]*pow(C/T[i],p);
                         if (Z_nb_e==83.02) zi+=Z_o5_BiIII[fit_order+1-p]*pow(C/T[i],p);
                     }
+                    
                 }
             }
             Z.push_back(zi);

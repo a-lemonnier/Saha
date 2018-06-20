@@ -450,6 +450,9 @@ std::string io<_T,_T1,_T2>::Z2element(int Z) {
         case 26:
             name="Fe";
             break;
+        case 82:
+            name="Pb";
+            break;
         case 83:
             name="Bi";
             break;

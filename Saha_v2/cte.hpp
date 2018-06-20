@@ -19,6 +19,11 @@ extern const double long E_Fe_FeI;
 extern const double long E_FeI_FeII;
 extern const double long E_FeII_FeIII;
 
+//Pb
+extern const double long E_Pb_PbI;
+extern const double long E_PbI_PbII;
+extern const double long E_PbII_PbIII;
+
 // Bi
 extern const double long E_Bi_BiI;
 extern const double long E_BiI_BiII;
@@ -34,6 +39,15 @@ extern const double long Z_o5_FeIII[];
 extern const double long Z_o8_FeI[];
 extern const double long Z_o8_FeII[];
 extern const double long Z_o8_FeIII[];
+
+// Pb
+extern const double long Z_o5_PbI[];
+extern const double long Z_o5_PbII[];
+extern const double long Z_o5_PbIII[];
+
+extern const double long Z_o8_PbI[];
+extern const double long Z_o8_PbII[];
+extern const double long Z_o8_PbIII[];
 
 // Bi
 extern const double long Z_o5_BiI[];
