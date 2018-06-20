@@ -51,7 +51,7 @@ bool py_wrapper::plot( std::string filename,
     code+="plt.tight_layout()\n\n";
 
     code+="plt.savefig('"+filename+".pdf')\n\n";
-    code+="plt.show()\n\n";
+    //code+="plt.show()\n\n";
 
 	return exec(code);
 }
