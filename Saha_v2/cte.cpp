@@ -18,9 +18,9 @@ const double long E_FeI_FeII = 16.19920 ;  // eV
 const double long E_FeII_FeIII = 30.651 ; // eV
 
 //Bi
-const double long E_Bi_BiI = 7.9024681 ; // eV
-const double long E_BiI_BiII = 16.19920 ;  // eV
-const double long E_BiII_BiIII = 30.651 ; // eV
+const double long E_Bi_BiI = 7.285516; // eV
+const double long E_BiI_BiII = 16.703;  // eV 1986
+const double long E_BiII_BiIII = 25.563; // eV 1958 and 1936
 
 
 /*** Z(X) Fits - Gray p.514 ***/
@@ -68,27 +68,41 @@ extern const double long Z_o8_FeIII[]= {
 
 // Bi
 const double long Z_o5_BiI[] = {
-    5
+    5,  
+    -0.76402244, 4.87474505, -11.98476836,
+    14.2112398, -8.2170803, 2.5192
 };
 
 const double long Z_o5_BiII[]= {
-    5
+    5, 
+    -0.00761218, 0.17143794, -0.93468094, 
+    2.21110868, -2.47385583, 1.08206667
 };
 
 const double long Z_o5_BiIII[]= {
-    5
+    5, 
+    -0.30729167, 1.94223485, -4.71983537,
+    5.52338287, -3.15368228, 1.01586667
 };
 
 extern const double long Z_o8_BiI[]= {
-    8
+    8, 
+    0.8719308, -8.51186829, 35.5066636,
+    -82.65078636, 117.55503217, -105.03542766, 
+    58.1929232, -18.76221687, 3.4612
 };
 
 extern const double long Z_o8_BiII[]= {
-    8
+    8, 
+    0.23251488, -1.48718342, 2.94436785, 
+    0.24466401, -8.70774612, 12.2333188,
+    -6.15789227, -0.09628792, 0.8484
 };
 
 extern const double long Z_o8_BiIII[]= {
-    8
+    8, 0.44080946, -4.21695371, 17.20904182,
+    -39.12284263, 54.2380036, -47.09927963,
+    25.24188494, -7.82445974, 1.4297
 };
 
 
