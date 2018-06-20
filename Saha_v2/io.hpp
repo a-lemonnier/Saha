@@ -27,6 +27,8 @@ public:
     bool write_csv ( std::vector<std::vector<_T> > &data );
 
     bool parse_cmd ( int argc, char** argv );
+    
+    std::string Z2element(int Z);
 
 private:
     unsigned int c_rows, c_lines;

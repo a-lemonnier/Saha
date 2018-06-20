@@ -12,13 +12,20 @@ const double long PI=3.14159265359; //
 
 
 /****  NIST  ****/
+// Fe
 const double long E_Fe_FeI = 7.9024681 ; // eV
 const double long E_FeI_FeII = 16.19920 ;  // eV
 const double long E_FeII_FeIII = 30.651 ; // eV
 
+//Bi
+const double long E_Bi_BiI = 7.9024681 ; // eV
+const double long E_BiI_BiII = 16.19920 ;  // eV
+const double long E_BiII_BiIII = 30.651 ; // eV
+
 
 /*** Z(X) Fits - Gray p.514 ***/
 /*** the first number is the order of the polyfit ***/
+// Fe
 const double long Z_o5_FeI[] = {
     5,
     -2.73036859, 17.35740822, -42.37110286,
@@ -59,6 +66,35 @@ extern const double long Z_o8_FeIII[]= {
 };
 
 
+// Bi
+const double long Z_o5_BiI[] = {
+    5
+};
+
+const double long Z_o5_BiII[]= {
+    5
+};
+
+const double long Z_o5_BiIII[]= {
+    5
+};
+
+extern const double long Z_o8_BiI[]= {
+    8
+};
+
+extern const double long Z_o8_BiII[]= {
+    8
+};
+
+extern const double long Z_o8_BiIII[]= {
+    8
+};
+
+
+
+int Z_number=0;
+std::string Z_name;
 bool verbose=false;
 const char SEPARATOR=' ';
 const std::string extname="dat"; // should be removed

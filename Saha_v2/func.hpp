@@ -14,25 +14,25 @@ public:
 
 // Saha equation
 // Fill vector with -1 if div by 0
-// nb_e is the electron number of the ionized element
+// Z_nb_e is ion with Kurucz conv.
     std::vector<_T2> saha_Ne (
         std::vector<_T1> &Z1,
         std::vector<_T1> &Z0,
         std::vector<_T2> &Ne,
         std::vector<_T2> &T,
-        int nb_e );
+        _T Z_nb_e );
 
     std::vector<_T2> saha_Pe (
         std::vector<_T1> &Z1,
         std::vector<_T1> &Z0,
         std::vector<_T2> &Pe,
         std::vector<_T2> &T,
-        int nb_e );
+        _T Z_nb_e );
 
 // Polynomial partition function
 // order is define by cmd line or by default to 8
-// nb_e is the electron number
-    std::vector<_T> Z_func ( std::vector<_T> &T, int nb_e );
+// Z_nb_e is ion with Kurucz conv.
+    std::vector<_T> Z_func ( std::vector<_T> &T, _T1 Z_nb_e );
 
 // n_j / sum(n_i)
     std::vector<_T> ratio_2elem ( std::vector<_T> &pop_ratio );

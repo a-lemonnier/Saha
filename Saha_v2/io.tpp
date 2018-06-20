@@ -14,7 +14,10 @@
 #include <unistd.h>
 
 template<class _T, class _T1, class _T2>
-io<_T,_T1,_T2>::io() {	sep=SEPARATOR; }
+io<_T,_T1,_T2>::io() {	
+    sep=SEPARATOR; 
+    Z_name=Z2element(Z_number);
+}
 
 
 template<class _T, class _T1, class _T2>
@@ -336,10 +339,11 @@ OPTIONS:\n \
 -m filename     atmosphere model, e.g. fort.8 (required)\n \
 -o filename     output file name (required)\n \
 -s \"char\"       separator charactere\n \
+-Z number       atomic number of the element\n \
 -v              be verbose\n";
 
 		int opt;
-		while((opt=getopt(argc, argv, "f:hl:m:o:s:v"))!=EOF) { // file, help, lines, model, outpout
+		while((opt=getopt(argc, argv, "f:hl:m:o:s:Z:v"))!=EOF) { // file, help, lines, model, outpout
 			switch(opt) {
                 case 'f':
 					std::cout << "fit order: " << std::stoi(optarg) << " .\n";
@@ -365,6 +369,10 @@ OPTIONS:\n \
 					std::cout << help;
 					exit(EXIT_SUCCESS);
 					break;
+                case 'Z':
+                    std::cout << "atomic number: " << optarg << "\n";
+                    Z_number=std::stoi(optarg);
+                    break;
 				case 'v':
 					verbose=true;
 					break;
@@ -384,6 +392,10 @@ OPTIONS:\n \
         if (fit_order!=5 && fit_order!=8) {
             std::cout << "fit order set to " << 8 << ".\n";
             fit_order=8;
+        }
+        if (Z_number<1 || Z_number>118) {
+            std::cerr << "invalid atomic number !\n";
+            exit(EXIT_FAILURE);
         }
 	}
 	else {
@@ -423,4 +435,28 @@ bool io<_T,_T1,_T2>::copy_file(std::string in, std::string out) {
 template<class _T, class _T1, class _T2>
 inline void io<_T,_T1,_T2>::remove_char(std::string &data, char C) {
 	data.erase(std::remove(data.begin(),data.end(),C),data.end());
+}
+
+template<class _T, class _T1, class _T2>
+std::string io<_T,_T1,_T2>::Z2element(int Z) {
+    std::string name;
+    switch (Z) {
+        case 1:
+            name="H";
+            break;
+        case 2:
+            name="He";
+            break;
+        case 26:
+            name="Fe";
+            break;
+        case 83:
+            name="Bi";
+            break;
+        default:
+            name="no_one";
+            break;       
+    }
+    
+    return name;
 }
