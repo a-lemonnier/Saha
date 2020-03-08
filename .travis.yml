@@ -3,27 +3,14 @@ dist: bionic
 compiler: gcc
 os: linux
 env:
-    - CXX_STANDARD=c++17
-addons:
-  apt:
-    sources:
-         - boost-latest
+    - CXX_STANDARD=c++11
+
 before_install:
-- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-- sudo apt-get update
-- sudo apt-get install libboost1.58-tools-dev
-- sudo apt-get install libboost-system1.58-dev
-- sudo apt-get install libboost-timer1.58-dev
-- sudo apt-get install libboost-filesystem1.58-dev
-- sudo apt-get install libboost-program_options1.58-dev
-- cmake .
 - make
-- ./findncopy -h
-- ./trim -h
-- ./threshold -h
+- ./saha -h
+
 branches:
   only:
       - master
 notifications:
   email: false
-
