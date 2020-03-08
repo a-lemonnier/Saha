@@ -7,8 +7,6 @@ env:
 
 before_install:
 - cd Saha_v2
-- make
-- ./saha -h
 
 branches:
   only:
