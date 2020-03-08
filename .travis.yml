@@ -4,7 +4,7 @@ compiler: gcc
 os: linux
 env:
     - CXX_STANDARD=c++11
-
+script: make
 before_install:
 - cd Saha_v2
 
