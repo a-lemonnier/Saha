@@ -6,6 +6,7 @@ env:
     - CXX_STANDARD=c++11
 
 before_install:
+- cd Saha_v2
 - make
 - ./saha -h
 
