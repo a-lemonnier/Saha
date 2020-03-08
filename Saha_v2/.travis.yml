@@ -3,19 +3,12 @@ dist: bionic
 compiler: gcc
 os: linux
 env:
-    - CXX_STANDARD=c++17
-addons:
-  apt:
-    sources:
-         - boost-latest
+    - CXX_STANDARD=c++11
+
 before_install:
-- sudo apt-get update
-- sudo apt-get install libboost-all-dev boost-build
-- cmake .
 - make
-- ./findncopy -h
-- ./trim -h
-- ./threshold -h
+- ./saha -h
+
 branches:
   only:
       - master
